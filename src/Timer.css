@@ -1,0 +1,74 @@
+.Timer{
+  background-color: blueviolet;
+  height: 80vh;
+  color: #ffffff;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.main_title{
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+section{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.length-control{
+  text-align: center;
+}
+
+.lengthHeader{
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+i{
+  display: inline-bock;
+}
+
+.lengthNumber{
+  display: inline-block;
+  margin: 0 2rem;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.timer {
+  border: 7px solid #13353a;
+  width: 270px;
+  height: 160px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+ #timer__label{
+   font-weight: bold;
+   font-size: 2rem;
+ }
+
+ #time__left {
+    font-size: 5rem;
+  }
+
+ .timer__control button:active {
+    color: #13353a;
+  }
