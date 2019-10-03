@@ -38,19 +38,41 @@ class Timer extends Component {
         )
     }
 
+    setSeshLength = (e) => {
+        this.lengthControl(
+            'seshLength',
+            e.currentTarget.value,
+            this.state.seshLength,
+            'Break'
+        )
+    }
+
     lengthControl = (
         stateToChange,
         sign,
-        currentLength,
-        timerType // not yet clear on what this is
+        currentLength, //currentLength of the state to change
+        timerType
     ) => {
+        //tackles break length
         if(this.state.timerType == timerType){
-            if(sign == '-' && currentLength !=1){
+            if(sign == '-' && currentLength != 1){
                 this.setState({[stateToChange]: currentLength - 1});
             }else if(sign == '+' && currentLength != 60){
                 this.setState({[stateToChange]: currentLength + 1})
             } 
-        }
+        } else{//tackles session length
+            if(sign == '-' && currentLength != 1){
+                this.setState({
+                    [stateToChange]: currentLength - 1,
+                    // timer: currentLength * 60 - 60 // change to minutes by multiplication, then substract 60 seconds for every minute removed 
+                })
+            } else if(sign = '+' && currentLength != 60){
+                this.setState({
+                    [stateToChange]: currentLength + 1,
+                    // timer: currentLength * 60 + 60
+                })
+            }
+        } 
     }
 
 
@@ -69,7 +91,7 @@ class Timer extends Component {
                     <TimerLengthControl 
                         props={this.state.sessionLength} 
                         currentTime= {this.state.seshLength}
-                        />
+                        clicked={this.setSeshLength}/>
                 </section>
                 <div className='timer'>
                     <div className='timer__wrapper'>
