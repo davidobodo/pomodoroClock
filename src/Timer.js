@@ -28,6 +28,14 @@ class Timer extends Component {
         alarmColor: { color: 'white' }
     };
 
+    activeSession = () => {
+        let minutes = Math.floor(this.state.timer / 60 ); // convert to minutes
+        let seconds = this.state.timer - minutes * 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds; //so that two digits are always present
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return minutes + ':' + seconds;
+    }
+
 
     setBrkLength = (e) => {
         this.lengthControl(
@@ -96,7 +104,7 @@ class Timer extends Component {
                 <div className='timer'>
                     <div className='timer__wrapper'>
                         <div id='timer__label'>{this.state.timerType}</div>
-                        <div id='time__left'>{this.state.seshLength}</div>
+                        <div id='time__left'>{this.activeSession()}</div>
                     </div>
                 </div>
                 <div className='timer__control'>

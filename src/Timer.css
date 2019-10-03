@@ -63,6 +63,7 @@ a{
  #timer__label{
    font-weight: bold;
    font-size: 2rem;
+   text-align: center;
  }
 
  #time__left {
