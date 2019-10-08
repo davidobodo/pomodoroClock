@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import './Timer.css'
 import TimerLengthControl from './TimerLengthControl'
 
+
+const  accurateInterval = function (fn, time){
+    var cancel, nextAt, timeOut, wrapper;
+    timeOut = null;
+    nextAt = new Date().getTime() + time; // next time
+    wrapper = function () {
+        nextAt += time;
+        timeOut = setTimeout(wrapper, nextAt - new Date().getTime())// run wrapper function after a second(i.e 'time' the value passed into this function)
+        console.log(fn())
+        return fn()// run decrementTimer
+    }
+
+    wrapper()
+}
+
+
 class Timer extends Component {
 
     state = {
@@ -28,14 +44,7 @@ class Timer extends Component {
         alarmColor: { color: 'white' }
     };
 
-    activeSession = () => {
-        let minutes = Math.floor(this.state.timer / 60 ); // convert to minutes
-        let seconds = this.state.timer - minutes * 60;
-        seconds = seconds < 10 ? '0' + seconds : seconds; //so that two digits are always present
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return minutes + ':' + seconds;
-    }
-
+   
 
     setBrkLength = (e) => {
         this.lengthControl(
@@ -72,15 +81,57 @@ class Timer extends Component {
             if(sign == '-' && currentLength != 1){
                 this.setState({
                     [stateToChange]: currentLength - 1,
-                    // timer: currentLength * 60 - 60 // change to minutes by multiplication, then substract 60 seconds for every minute removed 
+                    timer: currentLength * 60 - 60 //for active session
                 })
             } else if(sign = '+' && currentLength != 60){
                 this.setState({
                     [stateToChange]: currentLength + 1,
-                    // timer: currentLength * 60 + 60
+                    timer: currentLength * 60 + 60
                 })
             }
         } 
+    }
+
+    activeSession = () => {
+        let minutes = Math.floor(this.state.timer / 60 ); // convert to minutes
+        let seconds = this.state.timer - minutes * 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds; //so that two digits are always present
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return minutes + ':' + seconds;
+    }
+
+    play = () => {
+        if(this.state.timerState == 'stopped'){
+            this.beginCountDown();
+            this.setState({timerState: 'running'})
+        }
+    }
+
+    
+
+
+
+    beginCountDown = () => {
+        this.setState({
+            intervalID: accurateInterval(() => {
+                this.decrementTimer();
+            }, 1000)
+        })
+    }
+
+   
+
+    decrementTimer = () => {
+        console.log('here')
+        this.setState({ timer: this.state.timer - 1})
+    }
+
+    pause = () => {
+        if(this.state.timerState == 'running'){
+            this.setState({timerState: 'stopped'});
+            console.log('paused')
+            // this.state.intervalID && this.state.intervalID.cancel()//i dont understand you
+        }
     }
 
 
@@ -108,8 +159,8 @@ class Timer extends Component {
                     </div>
                 </div>
                 <div className='timer__control'>
-                        <i className="fa fa-play"></i>
-                        <i className="fa fa-pause"></i>
+                        <i className="fa fa-play" onClick = {this.play}></i>
+                        <i className="fa fa-pause" onClick = {this.pause}></i>
                         <i className="fa fa-repeat" aria-hidden="true"></i>
                 </div>
                 <div className='author'>
