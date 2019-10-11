@@ -149,8 +149,25 @@ class Timer extends Component {
                     timerType: 'Break',
                     timer: this.state.brkLength * 60
                 })
-            ) : console.log('here') ;
+            ) : this.setState({
+                timerType: 'Session',
+                timer: this.state.seshLength * 60
+            }) ;
         }
+    }
+
+    reset = () => {
+        this.setState({
+            brkLength: 5,
+            seshLength: 25,
+            timerState: 'stopped',
+            timerType: 'Session',
+            timer: 1500,
+            intervalID: '',
+            alarmColor: { color: 'white' }
+        });
+
+        this.state.intervalID && this.state.intervalID.cancel();
     }
 
 
@@ -178,9 +195,9 @@ class Timer extends Component {
                     </div>
                 </div>
                 <div className='timer__control'>
-                        <i className="fa fa-play" onClick = {this.play}></i>
-                        <i className="fa fa-pause" onClick = {this.pause}></i>
-                        <i className="fa fa-repeat" aria-hidden="true"></i>
+                        <i className="fa fa-play" onClick= {this.play}></i>
+                        <i className="fa fa-pause" onClick= {this.pause}></i>
+                        <i className="fa fa-pause" onClick= {this.reset}></i>
                 </div>
                 <div className='author'>
                     Designed and coded by
