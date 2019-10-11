@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import './Timer.css'
 import TimerLengthControl from './TimerLengthControl'
+import { clearTimeout } from 'timers';
 
 
 const  accurateInterval = function (fn, time){
-    var cancel, nextAt, timeOut, wrapper;
-    timeOut = null;
-    nextAt = new Date().getTime() + time; // next time
+    var cancel, nextAt, timeout, wrapper;
+    timeout = null;
+    nextAt = new Date().getTime() + time;
     wrapper = function () {
+        //get original time each time the function is called
         nextAt += time;
-        timeOut = setTimeout(wrapper, nextAt - new Date().getTime())// run wrapper function after a second(i.e 'time' the value passed into this function)
-        console.log(fn())
-        return fn()// run decrementTimer
+        //so that the function becomes recursive
+        timeout = setTimeout(wrapper, nextAt - new Date().getTime())
+        
+        return fn()
+    };
+    cancel = function () {
+        return window.clearTimeout(timeout);
+    };
+    timeout = setTimeout(wrapper, nextAt- new Date().getTime());
+    return{
+        cancel: cancel
     }
-
-    wrapper()
 }
 
 
@@ -122,15 +130,13 @@ class Timer extends Component {
    
 
     decrementTimer = () => {
-        console.log('here')
         this.setState({ timer: this.state.timer - 1})
     }
 
     pause = () => {
         if(this.state.timerState == 'running'){
             this.setState({timerState: 'stopped'});
-            console.log('paused')
-            // this.state.intervalID && this.state.intervalID.cancel()//i dont understand you
+            this.state.intervalID && this.state.intervalID.cancel()//i dont understand you
         }
     }
 
