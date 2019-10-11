@@ -123,6 +123,7 @@ class Timer extends Component {
         this.setState({
             intervalID: accurateInterval(() => {
                 this.decrementTimer();
+                this.switchTimer();
             }, 1000)
         })
     }
@@ -137,6 +138,18 @@ class Timer extends Component {
         if(this.state.timerState == 'running'){
             this.setState({timerState: 'stopped'});
             this.state.intervalID && this.state.intervalID.cancel()//i dont understand you
+        }
+    }
+
+    switchTimer = () => {
+        let timer = this.state.timer;
+        if(timer<0){
+            this.state.timerType == 'Session' ? (
+                this.setState({
+                    timerType: 'Break',
+                    timer: this.state.brkLength * 60
+                })
+            ) : console.log('here') ;
         }
     }
 
