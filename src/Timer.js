@@ -161,7 +161,6 @@ class Timer extends Component {
     }
 
     warning(timer){
-        console.log(this.state.alarmColor)
      timer < 61 ? this.setState({
             alarmColor: { color: '#a50d0d'}
         }): this.setState({
@@ -207,7 +206,7 @@ class Timer extends Component {
                         <div id='time__left'>{this.activeSession()}</div>
                     </div>
                 </div>
-                <div className='timer__control'>
+                <div className='timer__control' style={{cursor: 'pointer'}}>
                         <i className="fa fa-play" onClick= {this.play}></i>
                         <i className="fa fa-pause" onClick= {this.pause}></i>
                         <i onClick= {this.reset}>Reset</i>

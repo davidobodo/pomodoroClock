@@ -1,5 +1,7 @@
 .Timer{
-  background-color: blueviolet;
+  background-color: #000000;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1571064430562-7a8980fa8255?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80');
+  background-size: cover;
   height: 80vh;
   color: #ffffff;
   padding: 4rem;
