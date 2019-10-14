@@ -143,6 +143,7 @@ class Timer extends Component {
 
     switchTimer = () => {
         let timer = this.state.timer;
+        this.buzzer(timer)
         if(timer<0){
             this.state.timerType == 'Session' ? (
                 this.setState({
@@ -153,6 +154,12 @@ class Timer extends Component {
                 timerType: 'Session',
                 timer: this.state.seshLength * 60
             }) ;
+        }
+    }
+
+    buzzer = (time) => {
+        if(time === 0){
+            this.audioBeep.play()
         }
     }
 
@@ -197,13 +204,17 @@ class Timer extends Component {
                 <div className='timer__control'>
                         <i className="fa fa-play" onClick= {this.play}></i>
                         <i className="fa fa-pause" onClick= {this.pause}></i>
-                        <i className="fa fa-pause" onClick= {this.reset}></i>
+                        <i onClick= {this.reset}>Reset</i>
                 </div>
                 <div className='author'>
                     Designed and coded by
                     <a href='#'> Obodo David</a>
                 </div>
-                <audio id='beep' src=''> </audio>
+                <audio 
+                    id="beep" 
+                    preload="auto" 
+                    src="https://goo.gl/65cBl1" 
+                    ref= { audio => this.audioBeep = audio}></audio>
             </div>
         );
     }
