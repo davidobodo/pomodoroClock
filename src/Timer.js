@@ -143,7 +143,10 @@ class Timer extends Component {
 
     switchTimer = () => {
         let timer = this.state.timer;
-        this.buzzer(timer)
+        this.warning(timer)
+        if(timer === 0){
+            this.audioBeep.play()
+        };
         if(timer<0){
             this.state.timerType == 'Session' ? (
                 this.setState({
@@ -157,10 +160,13 @@ class Timer extends Component {
         }
     }
 
-    buzzer = (time) => {
-        if(time === 0){
-            this.audioBeep.play()
-        }
+    warning(timer){
+        console.log(this.state.alarmColor)
+     timer < 61 ? this.setState({
+            alarmColor: { color: '#a50d0d'}
+        }): this.setState({
+            alarmColor: { color: 'white'}
+        }); 
     }
 
     reset = () => {
@@ -196,7 +202,7 @@ class Timer extends Component {
                         clicked={this.setSeshLength}/>
                 </section>
                 <div className='timer'>
-                    <div className='timer__wrapper'>
+                    <div className='timer__wrapper' style={this.state.alarmColor}>
                         <div id='timer__label'>{this.state.timerType}</div>
                         <div id='time__left'>{this.activeSession()}</div>
                     </div>
